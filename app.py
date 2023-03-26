@@ -67,6 +67,27 @@ def create_account():
             'reason': 'Password too long.'
         })
 
+    # If contain at least 1 lowercase character
+    if not any(char.islower() for char in request_data['password']):
+        return jsonify({
+            'success': False,
+            'reason': 'Must contain at least 1 lowercase character.'
+        })
+
+    # If contain at least 1 uppercase character
+    if not any(char.isupper() for char in request_data['password']):
+        return jsonify({
+            'success': False,
+            'reason': 'Must contain at least 1 uppercase character.'
+        })
+
+    # If contain at least 1 digit
+    if not any(char.isdigit() for char in request_data['password']):
+        return jsonify({
+            'success': False,
+            'reason': 'Must contain at least 1 digit.'
+        })
+
     # Insert new username and password into the account table
     cursor.execute("INSERT INTO account (username, password) "
                    "VALUES (%s, %s)", (request_data['username'], request_data['password']))
