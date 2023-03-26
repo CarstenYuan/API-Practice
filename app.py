@@ -37,56 +37,56 @@ def create_account():
         return jsonify({
             'success': False,
             'reason': 'Username already exists.'
-        })
+        }), 409
 
     # Username too short
     if len(request_data['username']) < 3:
         return jsonify({
             'success': False,
             'reason': 'Username too short.'
-        })
+        }), 400
 
     # Username too long
     if len(request_data['username']) > 32:
         return jsonify({
             'success': False,
             'reason': 'Username too long.'
-        })
+        }), 400
 
     # Password too short
     if len(request_data['password']) < 8:
         return jsonify({
             'success': False,
             'reason': 'Password too short.'
-        })
+        }), 400
 
     # Password too long
     if len(request_data['password']) > 32:
         return jsonify({
             'success': False,
             'reason': 'Password too long.'
-        })
+        }), 400
 
     # If contain at least 1 lowercase character
     if not any(char.islower() for char in request_data['password']):
         return jsonify({
             'success': False,
             'reason': 'Must contain at least 1 lowercase character.'
-        })
+        }), 400
 
     # If contain at least 1 uppercase character
     if not any(char.isupper() for char in request_data['password']):
         return jsonify({
             'success': False,
             'reason': 'Must contain at least 1 uppercase character.'
-        })
+        }), 400
 
     # If contain at least 1 digit
     if not any(char.isdigit() for char in request_data['password']):
         return jsonify({
             'success': False,
             'reason': 'Must contain at least 1 digit.'
-        })
+        }), 400
 
     # Insert new username and password into the account table
     cursor.execute("INSERT INTO account (username, password) "
@@ -95,7 +95,7 @@ def create_account():
 
     return jsonify({
         'success': True
-    })
+    }), 201
 
 
 if __name__ == '__main__':
