@@ -53,6 +53,20 @@ def create_account():
             'reason': 'Username too long.'
         })
 
+    # Password too short
+    if len(request_data['password']) < 8:
+        return jsonify({
+            'success': False,
+            'reason': 'Password too short.'
+        })
+
+    # Password too long
+    if len(request_data['password']) > 32:
+        return jsonify({
+            'success': False,
+            'reason': 'Password too long.'
+        })
+
     # Insert new username and password into the account table
     cursor.execute("INSERT INTO account (username, password) "
                    "VALUES (%s, %s)", (request_data['username'], request_data['password']))
