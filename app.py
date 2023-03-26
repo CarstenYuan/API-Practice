@@ -30,6 +30,15 @@ def create_account():
     # request_data = {'username': 'testuser', 'password': 'Test1234'}
     request_data = request.get_json()
 
+    # Username already exists
+    cursor.execute("SELECT * FROM account WHERE username = %s", (request_data['username'], ))
+    user = cursor.fetchone()
+    if user:
+        return jsonify({
+            'success': False,
+            'reason': 'Username already exists.'
+        })
+
     # Insert new username and password into the account table
     cursor.execute("INSERT INTO account (username, password) "
                    "VALUES (%s, %s)", (request_data['username'], request_data['password']))
