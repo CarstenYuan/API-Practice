@@ -1,3 +1,4 @@
+from flask import Flask, request
 import mysql.connector
 
 
@@ -20,3 +21,15 @@ cursor.execute(
     )
     """
 )
+
+app = Flask(__name__)
+
+
+@app.route('/create-account', methods=['POST'])
+def create_account():
+    # request_data = {'username': 'testuser', 'password': 'Test1234'}
+    request_data = request.get_json()
+
+    # Insert new username and password into the account table
+    cursor.execute("INSERT INTO account (username, password) "
+                   "VALUES (%s, %s)", (request_data['username'], request_data['password']))
