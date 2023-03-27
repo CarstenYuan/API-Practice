@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 import mysql.connector
 
 
-# Use local MySQL DB here
+# Use Azure MySQL DB here
 # Set the environment variables in .env file instead of setting my info here
 load_dotenv()  # load environment variables from .env file
 
