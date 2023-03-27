@@ -98,5 +98,36 @@ def create_account():
     }), 201
 
 
+@app.route('/verify-account', methods=['POST'])
+def verify_account():
+    # request_data = {'username': 'testuser', 'password': 'Test1234'}
+    request_data = request.get_json()
+
+    # Check if user exists
+    cursor.execute("SELECT * FROM account WHERE username = %s", (request_data['username'], ))
+    # user = (1, 'testuser', 'Test1234')
+    user = cursor.fetchone()
+    if not user:
+        return jsonify({
+            'success': False,
+            'reason': "Username doesn't exist."
+        }), 401
+
+    # Incorrect password
+    cursor.execute("SELECT * FROM account WHERE username = %s", (request_data['username'], ))
+    password = cursor.fetchone()[2]
+    if password != request_data['password']:
+        return jsonify({
+            'success': False,
+            'reason': "Incorrect password."
+        }), 401
+
+    # Passed all verifications
+    return jsonify({
+        'success': True
+    })
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
