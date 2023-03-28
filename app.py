@@ -10,11 +10,11 @@ import mysql.connector
 load_dotenv()  # load environment variables from .env file
 
 db = mysql.connector.connect(
-    host=os.getenv('DB_HOST'),
-    user=os.getenv('DB_USER'),
+    host='api-assignment.mysql.database.azure.com',
+    user='haw',
     password=os.getenv('DB_PASSWORD'),
-    database=os.getenv('DB_DATABASE'),
-    port=os.getenv('DB_PORT')
+    database='api_assignment',
+    port=3306
 )
 
 cursor = db.cursor()
